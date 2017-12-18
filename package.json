@@ -1,18 +1,23 @@
-
 {
-  "name": "PatkerChat",
-  "description": "It's Patker Chat",
-  "version": "1.0.0",
+  "name": "patkerchat",
   "description": "Yes",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/the42ndturtle/PatkerChat.git"
+    "url": "git+https://github.com/the42ndturtle/PatkerChat.git"
   },
-  "keywords": ["Patker", "Chat"],
+  "keywords": [
+    "Patker",
+    "Chat"
+  ],
   "author": "Me",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/the42ndturtle/PatkerChat/issues"
+  },
+  "homepage": "https://github.com/the42ndturtle/PatkerChat#readme"
 }

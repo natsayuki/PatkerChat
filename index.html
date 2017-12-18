@@ -15,6 +15,11 @@ socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');
 
+String.prototype.replaceAll = function(str1, str2, ignore)
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+}
+
 function escapeHtml(text) {
   var map = {
     '&': '&amp;',
@@ -28,10 +33,13 @@ function escapeHtml(text) {
 }
 
 function emotify(string){
-  emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour"];
+  emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC"];
   $.each(emotes, function(index, emote){
-    string = string.replace(`:${emote}`, `<img src="emotes/${emote}.png" style="width: 2rem; height: 2rem;" />`);
-    console.log(string);
+    string = string.replaceAll(`:${emote}-s`, `<div class="emote spin" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
+    string = string.replaceAll(`:${emote}--spin`, `<div class="emote spin" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
+    string = string.replaceAll(`:${emote}-f`, `<div class="emote flip" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
+    string = string.replaceAll(`:${emote}--flip`, `<div class="emote flip" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
+    string = string.replaceAll(`:${emote}`, `<div class="emote" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
   });
   return string;
 }
@@ -53,11 +61,14 @@ $(document).keypress(function(e){
 
 socket.on("return", (json)=>{
   let message = escapeHtml(json["id"] + ": " + json['message']);
-  if(json['id'] == id){
-    $('.chat_box').append(`<p class="chat" style="color: blue;">${message}</p>`);
-  }else{
-    $('.chat_box').append(`<p class="chat">${message}</p>`);
+  if(json['message'] != ''){
+    if(json['id'] == id){
+      $('.chat_box').append(`<div class="message_wrap"><p class="chat" style="color: blue;">${message}</p></div><br />`);
+    }else{
+      $('.chat_box').append(`<div class="message_wrap"><p class="chat">${message}</p></div><br />`);
+    }
   }
+
 });
 
     </script>

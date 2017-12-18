@@ -33,7 +33,39 @@ body{
   border: 0px;
   margin: 0px;
   text-align: left;
+  display: inline-block;
 }
 textarea{
   resize: none;
+}
+.emote{
+  display: inline-block;
+}
+.spin{
+  animation: spin 5000ms linear infinite;
+}
+p{
+  margin: 0px;
+}
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+.flip{
+  animation: flip 1000ms linear infinite;
+}
+@keyframes flip{
+  0%{
+    transform:scaleX(1);
+  }
+  50%{
+    transform:scaleX(-1);
+  }
+  100%{
+    transform:scaleX(1);
+  }
 }

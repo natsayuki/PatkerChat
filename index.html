@@ -1,0 +1,75 @@
+<!doctype HTML>
+<html>
+  <head>
+    <title>Chat</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+const socket = io();
+
+const id = Math.floor(Math.random() * 10000000);
+socket.emit("id", id);
+const input = $('.input_box');
+const chat = $('.chat_box');
+
+function escapeHtml(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+
+  return emotify(text.replace(/[&<>"']/g, function(m) { return map[m]; }));
+}
+
+function emotify(string){
+  emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour"];
+  $.each(emotes, function(index, emote){
+    string = string.replace(`:${emote}`, `<img src="emotes/${emote}.png" style="width: 2rem; height: 2rem;" />`);
+    console.log(string);
+  });
+  return string;
+}
+
+function sendMessage(){
+  let message = $('.input_box').val();
+  socket.emit("message",
+    {"id": id, "message": message}
+  );
+  $('.input_box').val("");
+}
+
+$(document).keypress(function(e){
+  if(e.which == 13 && $('.input_box').is(":focus")){
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+socket.on("return", (json)=>{
+  let message = escapeHtml(json["id"] + ": " + json['message']);
+  if(json['id'] == id){
+    $('.chat_box').append(`<p class="chat" style="color: blue;">${message}</p>`);
+  }else{
+    $('.chat_box').append(`<p class="chat">${message}</p>`);
+  }
+});
+
+    </script>
+    <div align="center" class="chat_box_wrapper">
+      <div class="chat_box_back">
+        <div class="chat_box">
+
+        </div>
+      </div>
+      <textarea class="input_box"></textarea>
+      <br />
+      <button onClick="sendMessage();" class="button">send</button>
+    </div>
+  </body>
+</html>

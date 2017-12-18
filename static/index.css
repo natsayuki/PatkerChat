@@ -1,0 +1,39 @@
+.chat_box_wrapper{
+  width: auto;
+  height: 100%;
+}
+.chat_box_back{
+  width: 50%;
+  height: 50%;
+  background-color: lightgrey;
+  display: flex;
+  overflow: hidden;
+}
+.input_box{
+  width: 50%;
+  height: 10%
+}
+body{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+}
+.button{
+  margin: 0px;
+  border: 0px;
+}
+.chat_box{
+  height: auto;
+  width: auto;
+  align-self: flex-end;
+}
+.chat{
+  padding: 0px;
+  border: 0px;
+  margin: 0px;
+  text-align: left;
+}
+textarea{
+  resize: none;
+}

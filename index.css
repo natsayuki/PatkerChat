@@ -1,0 +1,12 @@
+.chat_box_wrapper{
+  width: auto;
+}
+.chat_box{
+  width: 80%;
+  height: 90px;
+  background-color: lightgrey;
+}
+.input_box{
+  width: 80%;
+  height: 10%
+}

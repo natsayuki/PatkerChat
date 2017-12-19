@@ -33,14 +33,60 @@ function escapeHtml(text) {
 }
 
 function emotify(string){
-  emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC"];
+  emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC", "Idiot",
+  "MadCauseBad", "Why"];
+  let matches = [];
+  const regex = /--*(\w{2,}|[a-z])/g;
   $.each(emotes, function(index, emote){
-    string = string.replaceAll(`:${emote}-s`, `<div class="emote spin" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
-    string = string.replaceAll(`:${emote}--spin`, `<div class="emote spin" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
-    string = string.replaceAll(`:${emote}-f`, `<div class="emote flip" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
-    string = string.replaceAll(`:${emote}--flip`, `<div class="emote flip" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
-    string = string.replaceAll(`:${emote}`, `<div class="emote" style="width: 2rem; height: 2rem; background: url('emotes/${emote}.png'); background-size: 2rem;"></div>`);
+    let classes = [];
+    let matches = [];
+    let m;
+    while ((m = regex.exec(string)) !== null) {
+        if (m.index === regex.lastIndex) {
+            regex.lastIndex++;
+        }
+        m.forEach((match, groupIndex) => {
+            if(matches.indexOf(match) == -1 && groupIndex == 1){
+              matches.push(match);
+            }
+        });
+    }
+
+    if(string.indexOf(emote) > -1){
+      console.log(emote + " " + matches.toString());
+      if(matches.indexOf("s") > -1 || matches.indexOf("spin") > -1){
+        classes.push('spin');
+      }
+      if(matches.indexOf('f') > -1 || matches.indexOf("flip") > -1){
+        classes.push('flip');
+      }
+      if(matches.indexOf('r') > -1 || matches.indexOf('rainbow') > -1){
+        classes.push('rainbow');
+      }
+      if(matches.indexOf('c') > -1 || matches.indexOf('contrast') > -1){
+        classes.push('contrast');
+      }
+      if(matches.indexOf('g') > -1 || matches.indexOf('sad') > -1){
+        classes.push('sad');
+      }
+      if(matches.indexOf('w') > -1 || matches.indexOf('wacky') > -1){
+        classes.push('wacky');
+      }
+      if(matches.indexOf('b') > -1 || matches.indexOf('spooky') > -1){
+        classes.push('spooky');
+      }
+      console.log(classes.toString());
+      classes = classes.toString().replaceAll(',', ' ');
+      console.log(classes);
+      console.log(matches.toString());
+      matches = "-"+matches.toString().replaceAll(",", "-");
+      console.log(matches);
+      console.log(emote+matches);
+      string = string.replaceAll(`:${emote}${matches}`, `<img src="emotes/${emote}.png" style="width: 2rem; height: 2rem;" class="${classes}" />`);
+      string = string.replace(":Spiffy", "butt");
+    }
   });
+
   return string;
 }
 
@@ -61,11 +107,11 @@ $(document).keypress(function(e){
 
 socket.on("return", (json)=>{
   let message = escapeHtml(json["id"] + ": " + json['message']);
-  if(json['message'] != ''){
+  if(json['message'] != '' && json['message'] != ' '){
     if(json['id'] == id){
-      $('.chat_box').append(`<div class="message_wrap"><p class="chat" style="color: blue;">${message}</p></div><br />`);
+      $('.chat_box').append(`<p class="chat" style="color: blue">${message}</p>`);
     }else{
-      $('.chat_box').append(`<div class="message_wrap"><p class="chat">${message}</p></div><br />`);
+      $('.chat_box').append(`<p class="chat">${message}</p>`);
     }
   }
 

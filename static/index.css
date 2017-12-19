@@ -4,10 +4,9 @@
 }
 .chat_box_back{
   width: 50%;
-  height: 50%;
+  height: 70%;
   background-color: lightgrey;
   display: flex;
-  overflow: hidden;
 }
 .input_box{
   width: 50%;
@@ -24,12 +23,15 @@ body{
   border: 0px;
 }
 .chat_box{
-  height: auto;
-  width: auto;
+  height: 100%;
+  width: 100%;
   align-self: flex-end;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-end;
+  overflow-y: auto;
+  word-break: break-all;
 }
 .chat{
   padding: 0px;
@@ -37,6 +39,7 @@ body{
   margin: 0px;
   text-align: left;
   display: inline-block;
+  margin: .25rem;
 }
 textarea{
   resize: none;
@@ -49,6 +52,15 @@ textarea{
 }
 p{
   margin: 0px;
+}
+img{
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
 }
 @keyframes spin {
     from {
@@ -70,5 +82,48 @@ p{
   }
   100%{
     transform:scaleX(1);
+  }
+}
+.contrast{
+  filter: contrast(200%);
+}
+.sad{
+  filter: grayscale(80%);
+}
+.wacky{
+  filter: hue-rotate(90deg);
+}
+.spooky{
+  filter: invert(100%);
+}
+
+
+
+
+
+
+
+
+.rainbow{
+  animation: rainbow 1000ms linear infinite;
+}
+@keyframes rainbow{
+  0%{
+    background: rgb(255, 0, 0);
+  }
+  %20{
+    background: rgb(255, 153, 0);
+  }
+  %40{
+    background: rgb(255, 255, 0);
+  }
+  %60{
+    background: rgb(0, 153, 51);
+  }
+  %80{
+    background: rgb(0, 102, 255);
+  }
+  100%{
+    background: rgb(153, 51, 255);
   }
 }

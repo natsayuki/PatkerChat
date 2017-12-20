@@ -15,6 +15,25 @@ socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');
 
+$(document).ready(function(){
+  $('.input_box').focus();
+  $(document).on('mousemove', function(e){
+    $('.hover_tag').css({
+       left:  e.pageX,
+       top:   e.pageY - ($('.hover_tag').height() + 4)
+    });
+  });
+  $('.chat_box').on('mouseenter', '.emote', function(){
+    let emote = $(this).attr('emote');
+    let tags = $(this).attr('tags');
+    $('.hover_tag').html('<p>:'+emote+tags+'</p>');
+    console.log($('.hover_tag').height() + 4)
+  });
+  $('.chat_box').on('mouseleave', '.emote', function(){
+    $('.hover_tag').html('');
+  });
+});
+
 String.prototype.replaceAll = function(str1, str2, ignore)
 {
     return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
@@ -36,7 +55,7 @@ function emotify(string){
   emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC", "Idiot",
   "MadCauseBad", "Why"];
   let matches = [];
-  const regex = /--*(\w{2,}|[a-z])/g;
+  const regex = /-[sfrcgwb]/g;
   $.each(emotes, function(index, emote){
     let classes = [];
     let matches = [];
@@ -46,44 +65,24 @@ function emotify(string){
             regex.lastIndex++;
         }
         m.forEach((match, groupIndex) => {
-            if(matches.indexOf(match) == -1 && groupIndex == 1){
+            if(matches.indexOf(match) == -1 && groupIndex == 0){
               matches.push(match);
             }
         });
     }
 
     if(string.indexOf(emote) > -1){
-      console.log(emote + " " + matches.toString());
-      if(matches.indexOf("s") > -1 || matches.indexOf("spin") > -1){
-        classes.push('spin');
-      }
-      if(matches.indexOf('f') > -1 || matches.indexOf("flip") > -1){
-        classes.push('flip');
-      }
-      if(matches.indexOf('r') > -1 || matches.indexOf('rainbow') > -1){
-        classes.push('rainbow');
-      }
-      if(matches.indexOf('c') > -1 || matches.indexOf('contrast') > -1){
-        classes.push('contrast');
-      }
-      if(matches.indexOf('g') > -1 || matches.indexOf('sad') > -1){
-        classes.push('sad');
-      }
-      if(matches.indexOf('w') > -1 || matches.indexOf('wacky') > -1){
-        classes.push('wacky');
-      }
-      if(matches.indexOf('b') > -1 || matches.indexOf('spooky') > -1){
-        classes.push('spooky');
-      }
-      console.log(classes.toString());
-      classes = classes.toString().replaceAll(',', ' ');
-      console.log(classes);
-      console.log(matches.toString());
-      matches = "-"+matches.toString().replaceAll(",", "-");
-      console.log(matches);
-      console.log(emote+matches);
-      string = string.replaceAll(`:${emote}${matches}`, `<img src="emotes/${emote}.png" style="width: 2rem; height: 2rem;" class="${classes}" />`);
-      string = string.replace(":Spiffy", "butt");
+      classes = matches.toString()
+      .replaceAll("-s", "spin ")
+      .replaceAll("-f", "flip ")
+      .replaceAll("-r", "rainbow ")
+      .replaceAll("-c", "contrast ")
+      .replaceAll("-g", "sad ")
+      .replaceAll("-w", "wacky ")
+      .replaceAll("-b", "spooky")
+      .replaceAll(',',' ');
+      matches = matches.toString().replaceAll(',','');
+      string = string.replaceAll(`:${emote}${matches}`, `<img src="emotes/${emote}.png" class="emote ${classes}" tags="${matches}" emote="${emote}" />`);
     }
   });
 
@@ -104,6 +103,14 @@ $(document).keypress(function(e){
     sendMessage();
   }
 });
+
+$(document).keypress(function(e){
+  if(e.which == 102){
+    $('.input_box').focus();
+  }
+});
+
+
 
 socket.on("return", (json)=>{
   let message = escapeHtml(json["id"] + ": " + json['message']);
@@ -128,5 +135,6 @@ socket.on("return", (json)=>{
       <br />
       <button onClick="sendMessage();" class="button">send</button>
     </div>
+    <div class="hover_tag"></div>
   </body>
 </html>

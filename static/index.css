@@ -46,6 +46,27 @@ textarea{
 }
 .emote{
   display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.hover_tag{
+  position: absolute;
+  background-color: black;
+}
+.hover_tag p{
+  color: white;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 .spin{
   animation: spin 5000ms linear infinite;
@@ -53,15 +74,7 @@ textarea{
 p{
   margin: 0px;
 }
-img{
-  user-drag: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  pointer-events: none;
-}
+
 @keyframes spin {
     from {
         transform:rotate(0deg);

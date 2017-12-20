@@ -15,6 +15,11 @@ socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');
 
+function beamit(socket, back, message){
+  socket.emit(back, message);
+  socket.broadcast.emit(back, message);
+}
+
 $(document).ready(function(){
   $('.input_box').focus();
   $(document).on('mousemove', function(e){
@@ -27,10 +32,21 @@ $(document).ready(function(){
     let emote = $(this).attr('emote');
     let tags = $(this).attr('tags');
     $('.hover_tag').html('<p>:'+emote+tags+'</p>');
-    console.log($('.hover_tag').height() + 4)
+    $('.hover_tag').attr('emote', ':'+emote+tags);
   });
   $('.chat_box').on('mouseleave', '.emote', function(){
     $('.hover_tag').html('');
+  });
+  $('.chat_box').on('dblclick', '.chat', function(){
+    if($('.hover_tag').width() > 0){
+      console.log($('.hover_tag').attr('emote'));
+      $('.input_box').val($('.input_box').val() + $('.hover_tag').attr('emote'));
+    }
+    else{
+      let thisId = $(this).attr('thisId');
+      $('.input_box').val(`:whisper(${thisId})`);
+    }
+    $('.input_box').focus();
   });
 });
 
@@ -52,6 +68,7 @@ function escapeHtml(text) {
 }
 
 function emotify(string){
+  console.log(string);
   emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC", "Idiot",
   "MadCauseBad", "Why"];
   let matches = [];
@@ -91,10 +108,45 @@ function emotify(string){
 
 function sendMessage(){
   let message = $('.input_box').val();
-  socket.emit("message",
-    {"id": id, "message": message}
-  );
+  if(message.substring(0, 8) == ':whisper'){
+    const regex = /:whisper[(][0-9]{1,8}[)]/g;
+    const str = message;
+    let m;
+
+    while ((m = regex.exec(str)) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+      }
+
+      // The result can be accessed through the `m`-variable.
+      const regex1 = /[(][0-9]{1,8}[)]/g;
+      const str1 = m[0];
+      let m1;
+
+      while ((m1 = regex1.exec(str1)) !== null) {
+          // This is necessary to avoid infinite loops with zero-width matches
+          if (m1.index === regex1.lastIndex) {
+              regex1.lastIndex++;
+          }
+
+          // The result can be accessed through the `m`-variable.
+          let to = m1[0].replaceAll(')', '').replaceAll('(', '');
+          console.log(to);
+          let toMessage = message.replace(m[0], '');
+          console.log(toMessage);
+          socket.emit('whisper', {'to': to, 'from': id, 'message': toMessage})
+      }
+    }
+  }
+  else{
+    socket.emit("message",
+      {"id": id, "message": message}
+    );
+  }
+
   $('.input_box').val("");
+
 }
 
 $(document).keypress(function(e){
@@ -110,15 +162,28 @@ $(document).keypress(function(e){
   }
 });
 
-
+socket.on("returnWhisper", (json)=>{
+  console.log(json['from']);
+  if(json['from'] == id){
+    let messageId = json['to'];
+    let message = escapeHtml(`to ${json['to']}: ${json['message']}`);
+    $('.chat_box').append(`<p class="chat" style="color: grey" thisId="${messageId}">${message}</p>`);
+  }
+  if(json['to'] == id){
+    let messageId = json['from'];
+    let message = escapeHtml(`from ${json['from']}: ${json['message']}`);
+    $('.chat_box').append(`<p class="chat" style="color: grey" thisId="${messageId}">${message}</p>`);
+  }
+});
 
 socket.on("return", (json)=>{
   let message = escapeHtml(json["id"] + ": " + json['message']);
   if(json['message'] != '' && json['message'] != ' '){
+    let messageId = json['id'];
     if(json['id'] == id){
-      $('.chat_box').append(`<p class="chat" style="color: blue">${message}</p>`);
+      $('.chat_box').append(`<p class="chat" style="color: blue" thisId="${messageId}">${message}</p>`);
     }else{
-      $('.chat_box').append(`<p class="chat">${message}</p>`);
+      $('.chat_box').append(`<p class="chat" thisId="${messageId}">${message}</p>`);
     }
   }
 
@@ -135,6 +200,6 @@ socket.on("return", (json)=>{
       <br />
       <button onClick="sendMessage();" class="button">send</button>
     </div>
-    <div class="hover_tag"></div>
+    <div class="hover_tag" emote=""></div>
   </body>
 </html>

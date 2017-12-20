@@ -29,6 +29,10 @@ io.on('connection', (socket) => {
   socket.on("id", (id)=>{
     console.log(id + " has joined");
   });
+  socket.on('whisper', (json)=>{
+    console.log(json);
+    beamit(socket, 'returnWhisper', json);
+  });
 });
 
 server.listen(port, () => {

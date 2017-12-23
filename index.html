@@ -76,21 +76,27 @@ $(document).ready(function(){
   $(document).on('mousedown', '.chat', function(e){
     if(e.which == 3){
       $('.input_box').val($('.input_box').val() + `@` + $(this).attr('thisid'))
+      $('.input_box').focus();
     }
   });
   $(document).on('contextmenu', '.chat', function(e){
     e.preventDefault();
   });
-  $('.emote_list').hide();
+  // $('.emote_list').hide();
   $('.emote_list_button').click(function(){
     $('.emote_list').toggle();
   });
 });
 
-String.prototype.replaceAll = function(str1, str2, ignore)
-{
-    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-}
+// String.prototype.replaceAll = function(str1, str2, ignore)
+// {
+//     return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+// }
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
 
 function escapeHtml(text) {
   var map = {
@@ -100,13 +106,11 @@ function escapeHtml(text) {
     '"': '&quot;',
     "'": '&#039;'
   };
-
-  return emotify(text.replace(/[&<>"']/g, function(m) { return map[m]; }));
+  text = emotify(text.replace(/[&<>"']/g, function(m) { return map[m]; }));
+  return text;
 }
 
 function emotify(string){
-  console.log(string);
-  let matches = [];
   const regex = /-[sfrcgwb]/g;
   $.each(emotes, function(index, emote){
     let classes = [];
@@ -137,7 +141,11 @@ function emotify(string){
       string = string.replaceAll(`:${emote}${matches}`, `<img src="emotes/${emote}.png" class="emote ${classes}" tags="${matches}" emote="${emote}" />`);
     }
   });
-
+  $.each(emotes, function(index, emote){
+    if(string.indexOf(`:${emote}`) != -1){
+      setTimeout(string = emotify(string));
+    }
+  });
   return string;
 }
 

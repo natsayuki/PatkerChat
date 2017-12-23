@@ -15,12 +15,29 @@ socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');
 
+emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC", "Idiot",
+"MadCauseBad", "Why", "MonkaHyper", "Brit", "GnomeChild", "SurprisePatker"];
+
 function beamit(socket, back, message){
   socket.emit(back, message);
   socket.broadcast.emit(back, message);
 }
 
 $(document).ready(function(){
+  $.each(emotes, function(index, emote){
+    $('.emote_list').append(`<img src="emotes/${emote}.png" class="emote preview" tags="" emote="${emote}" previewType="emote" />`)
+  });
+  $('.emote_list').append(`
+    <h1>Animation Tags</h1>
+    <img src="emotes/Patker.png" class="emote preview spin" tags="" emote="Spin" previewType="animation_tag" tag="-s" />
+    <img src="emotes/Patker.png" class="emote preview flip" tags="" emote="Flip" previewType="animation_tag" tag="-f" />
+    <img src="emotes/Patker.png" class="emote preview rainbow" tags="" emote="Rainbow" previewType="animation_tag" tag="-r" />
+    <h1>Color Tags</h1>
+    <img src="emotes/Patker.png" class="emote preview contrast" tags="" emote="Contrast" previewType="color_tag" tag="-c" />
+    <img src="emotes/Patker.png" class="emote preview sad" tags="" emote="Sad" previewType="color_tag" tag="-g" />
+    <img src="emotes/Patker.png" class="emote preview wacky" tags="" emote="Wacky" previewType="color_tag" tag="-w" />
+    <img src="emotes/Patker.png" class="emote preview spooky" tags="" emote="Spooky" previewType="color_tag" tag="-b" />
+  `)
   $('.input_box').focus();
   $(document).on('mousemove', function(e){
     $('.hover_tag').css({
@@ -28,13 +45,13 @@ $(document).ready(function(){
        top:   e.pageY - ($('.hover_tag').height() + 4)
     });
   });
-  $('.chat_box').on('mouseenter', '.emote', function(){
+  $(document).on('mouseenter', '.emote', function(){
     let emote = $(this).attr('emote');
     let tags = $(this).attr('tags');
     $('.hover_tag').html('<p>:'+emote+tags+'</p>');
     $('.hover_tag').attr('emote', ':'+emote+tags);
   });
-  $('.chat_box').on('mouseleave', '.emote', function(){
+  $(document).on('mouseleave', '.emote', function(){
     $('.hover_tag').html('');
   });
   $('.chat_box').on('dblclick', '.chat', function(){
@@ -47,6 +64,26 @@ $(document).ready(function(){
       $('.input_box').val(`:whisper(${thisId})`);
     }
     $('.input_box').focus();
+  });
+  $(document).on('dblclick', '.preview', function(){
+    if($(this).attr('previewType') == 'emote'){
+      $('.input_box').val($('.input_box').val() + $('.hover_tag').attr('emote'));
+    }
+    else{
+      $('.input_box').val($('.input_box').val() + $(this).attr('tag'));
+    }
+  });
+  $(document).on('mousedown', '.chat', function(e){
+    if(e.which == 3){
+      $('.input_box').val($('.input_box').val() + `@` + $(this).attr('thisid'))
+    }
+  });
+  $(document).on('contextmenu', '.chat', function(e){
+    e.preventDefault();
+  });
+  $('.emote_list').hide();
+  $('.emote_list_button').click(function(){
+    $('.emote_list').toggle();
   });
 });
 
@@ -69,8 +106,6 @@ function escapeHtml(text) {
 
 function emotify(string){
   console.log(string);
-  emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC", "Idiot",
-  "MadCauseBad", "Why"];
   let matches = [];
   const regex = /-[sfrcgwb]/g;
   $.each(emotes, function(index, emote){
@@ -183,7 +218,12 @@ socket.on("return", (json)=>{
     if(json['id'] == id){
       $('.chat_box').append(`<p class="chat" style="color: blue" thisId="${messageId}">${message}</p>`);
     }else{
-      $('.chat_box').append(`<p class="chat" thisId="${messageId}">${message}</p>`);
+      if(json['message'].indexOf(`@${id}`) != -1){
+        $('.chat_box').append(`<p class="chat" style="color: yellow;" thisId="${messageId}">${message}</p>`);
+      }
+      else{
+        $('.chat_box').append(`<p class="chat" thisId="${messageId}">${message}</p>`);
+      }
     }
   }
 
@@ -195,8 +235,14 @@ socket.on("return", (json)=>{
         <div class="chat_box">
 
         </div>
+        <div class="emote_list">
+          <h1>Emotes</h1>
+        </div>
       </div>
       <textarea class="input_box"></textarea>
+      <div class="emote_list_button">
+
+      </div>
       <br />
       <button onClick="sendMessage();" class="button">send</button>
     </div>

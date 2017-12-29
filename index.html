@@ -111,7 +111,9 @@ function escapeHtml(text) {
 }
 
 function emotify(string){
-  const regex = /-[sfrcgwb]/g;
+  // const regex = /-[sfrcgwb]/g;
+  const emoteRegEx = emotes.join('|');
+  const regex = new RegExp(`:(${emoteRegEx})(-[sfrcgwb](-[sfrcgwb])?)`, 'g');
   $.each(emotes, function(index, emote){
     let classes = [];
     let matches = [];
@@ -120,30 +122,32 @@ function emotify(string){
         if (m.index === regex.lastIndex) {
             regex.lastIndex++;
         }
-        m.forEach((match, groupIndex) => {
-            if(matches.indexOf(match) == -1 && groupIndex == 0){
-              matches.push(match);
-            }
-        });
+        matches.push(m[2])
+        // m.forEach((match, groupIndex) => {
+        //     if(matches.indexOf(match) == -1 && groupIndex == 2){
+        //       matches.push(match);
+        //     }
+        // });
     }
 
-    if(string.indexOf(emote) > -1){
+    if(string.indexOf(':'+emote) > -1){
       classes = matches.toString()
-      .replaceAll("-s", "spin ")
-      .replaceAll("-f", "flip ")
-      .replaceAll("-r", "rainbow ")
-      .replaceAll("-c", "contrast ")
-      .replaceAll("-g", "sad ")
-      .replaceAll("-w", "wacky ")
-      .replaceAll("-b", "spooky")
+      .replaceAll("-s", " spin ")
+      .replaceAll("-f", " flip ")
+      .replaceAll("-r", " rainbow ")
+      .replaceAll("-c", " contrast ")
+      .replaceAll("-g", " sad ")
+      .replaceAll("-w", " wacky ")
+      .replaceAll("-b", " spooky")
       .replaceAll(',',' ');
       matches = matches.toString().replaceAll(',','');
+      console.log(emote + matches + " " + classes)
       string = string.replaceAll(`:${emote}${matches}`, `<img src="emotes/${emote}.png" class="emote ${classes}" tags="${matches}" emote="${emote}" />`);
     }
   });
   $.each(emotes, function(index, emote){
     if(string.indexOf(`:${emote}`) != -1){
-      setTimeout(string = emotify(string));
+      string = emotify(string);
     }
   });
   return string;

@@ -6,7 +6,7 @@
   </head>
   <body>
     <script src="socket.io/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
 const socket = io();
 
@@ -111,45 +111,82 @@ function escapeHtml(text) {
 }
 
 function emotify(string){
-  // const regex = /-[sfrcgwb]/g;
   const emoteRegEx = emotes.join('|');
   const regex = new RegExp(`:(${emoteRegEx})(-[sfrcgwb](-[sfrcgwb])?)`, 'g');
-  $.each(emotes, function(index, emote){
-    let classes = [];
-    let matches = [];
-    let m;
-    while ((m = regex.exec(string)) !== null) {
-        if (m.index === regex.lastIndex) {
-            regex.lastIndex++;
-        }
-        matches.push(m[2])
-        // m.forEach((match, groupIndex) => {
-        //     if(matches.indexOf(match) == -1 && groupIndex == 2){
-        //       matches.push(match);
-        //     }
-        // });
+  const match = string.match(regex);
+  matches = [];
+  if(match){
+    for(result of match){
+      matches.push(result);
     }
-
-    if(string.indexOf(':'+emote) > -1){
-      classes = matches.toString()
+    $.each(matches, function(index, item){
+      console.log(item);
+      const tags = item.substring(item.indexOf('-'),item.length);
+      const emote = item.substring(1, item.indexOf('-'));
+      console.log('emote: ' +emote + ' tags: ' + tags);
+      classes = tags
       .replaceAll("-s", " spin ")
       .replaceAll("-f", " flip ")
       .replaceAll("-r", " rainbow ")
       .replaceAll("-c", " contrast ")
       .replaceAll("-g", " sad ")
       .replaceAll("-w", " wacky ")
-      .replaceAll("-b", " spooky")
-      .replaceAll(',',' ');
-      matches = matches.toString().replaceAll(',','');
-      console.log(emote + matches + " " + classes)
-      string = string.replaceAll(`:${emote}${matches}`, `<img src="emotes/${emote}.png" class="emote ${classes}" tags="${matches}" emote="${emote}" />`);
-    }
-  });
+      .replaceAll("-b", " spooky");
+      console.log(classes);
+      const finder = new RegExp(`${item}(?!-[sfrcgwb])`);
+      string = string.replaceAll(finder, `<img src="emotes/${emote}.png" class="emote ${classes}" tags="${tags}" emote="${emote}" />`);
+    });
+
+  }
   $.each(emotes, function(index, emote){
-    if(string.indexOf(`:${emote}`) != -1){
-      string = emotify(string);
-    }
+    string = string.replaceAll(`:${emote}`, `<img src="emotes/${emote}.png" class="emote" tags="" emote="${emote}" />`)
   });
+
+  // $.each(emotes, function(index, emote){
+  //   // new code
+  //   match = string.match(regex);
+  //   let matches = [];
+  //   for(result of match){
+  //     matches.push(result);
+  //   }
+  //   $.each(matches, function(index, item){console.log(item);});
+  //   //end new code
+  //   // let classes = [];
+  //   // let matches = [];
+  //   // let m;
+  //   // while ((m = regex.exec(string)) !== null) {
+  //   //     if (m.index === regex.lastIndex) {
+  //   //         regex.lastIndex++;
+  //   //     }
+  //   //     matches.push(m[2])
+  //   //     // m.forEach((match, groupIndex) => {
+  //   //     //     if(matches.indexOf(match) == -1 && groupIndex == 2){
+  //   //     //       matches.push(match);
+  //   //     //     }
+  //   //     // });
+  //   // }
+  //   //
+  //   // if(string.indexOf(':'+emote) > -1){
+  //   //   classes = matches.toString()
+  //   //   .replaceAll("-s", " spin ")
+  //   //   .replaceAll("-f", " flip ")
+  //   //   .replaceAll("-r", " rainbow ")
+  //   //   .replaceAll("-c", " contrast ")
+  //   //   .replaceAll("-g", " sad ")
+  //   //   .replaceAll("-w", " wacky ")
+  //   //   .replaceAll("-b", " spooky")
+  //   //   .replaceAll(',',' ');
+  //   //   matches = matches.toString().replaceAll(',','');
+  //   //   console.log(emote + matches + " " + classes)
+  //   //   string = string.replaceAll(`:${emote}${matches}`, `<img src="emotes/${emote}.png" class="emote ${classes}" tags="${matches}" emote="${emote}" />`);
+  //   // }
+  // });
+  // $.each(emotes, function(index, emote){
+  //   if(string.indexOf(`:${emote}`) != -1){
+  //     string = emotify(string);
+  //     return;
+  //   }
+  // });
   return string;
 }
 

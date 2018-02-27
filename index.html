@@ -135,6 +135,7 @@ function emotify(string){
       console.log(classes);
       const finder = new RegExp(`${item}(?!-[sfrcgwb])`);
       string = string.replaceAll(finder, `<img src="emotes/${emote}.png" class="emote ${classes}" tags="${tags}" emote="${emote}" />`);
+      console.log('here');
     });
 
   }

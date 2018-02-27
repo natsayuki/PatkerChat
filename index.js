@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 
 app.use(express.static("static"));
 
-const port = process.env.PORT || 1337;
+const port = process.env.PORT || 3000;
 
 io.on('connection', (socket) => {
   socket.on("message", (message)=>{

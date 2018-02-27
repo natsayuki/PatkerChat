@@ -15,8 +15,8 @@ socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');
 
-emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC", "Idiot",
-"MadCauseBad", "Why", "MonkaHyper", "Brit", "GnomeChild", "SurprisePatker"];
+emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC"
+, "MonkaHyper", "Brit", "GnomeChild", "SurprisePatker"];
 
 function beamit(socket, back, message){
   socket.emit(back, message);
@@ -82,16 +82,11 @@ $(document).ready(function(){
   $(document).on('contextmenu', '.chat', function(e){
     e.preventDefault();
   });
-  // $('.emote_list').hide();
   $('.emote_list_button').click(function(){
     $('.emote_list').toggle();
   });
 });
 
-// String.prototype.replaceAll = function(str1, str2, ignore)
-// {
-//     return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-// }
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;

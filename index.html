@@ -87,7 +87,7 @@ $(document).ready(function(){
   });
   $('#query').click(function(){
     let json = {'username': $('#username').val(), 'password': $('#password').val()};
-    beamit(socket, 'login', json);
+    socket.emit('login', json);
   });
 
 });

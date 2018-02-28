@@ -86,7 +86,8 @@ $(document).ready(function(){
     $('.emote_list').toggle();
   });
   $('#query').click(function(){
-    console.log('clicked');
+    let json = {'username': $('#username').val(), 'password': $('#password').val()};
+    beamit(socket, 'login', json);
   });
 
 });

@@ -19,14 +19,8 @@ app.get('/', (req, res) => {
 app.use(express.static("static"));
 
 const port = process.env.PORT || 3000;
-var mysql = require('mysql');
-con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '42turtle'
-});
+
 io.on('connection', (socket) => {
-  console.log('io start');
   socket.on("message", (message)=>{
     console.log(message);
     string = message["id"] + ": " + message['message']
@@ -39,22 +33,8 @@ io.on('connection', (socket) => {
     console.log(json);
     beamit(socket, 'returnWhisper', json);
   });
-  socket.on('login', (json)=>{
-    con.connect(function(err) {
-      if (err) throw err;
-      console.log("Connected!");
-      console.log(`username: ${json['username']}, password: ${json['password']}`);
-      let sql = `SELECT * FROM users WHERE username = ${json['username']}`;
-      con.query(sql, function(err, result){
-        if(err) throw err;
-        console.log(result);
-      });
-    });
-  });
+});
 
-  console.log('after connect');
-  server.listen(port, () => {
-    console.log("server up on port " + port);
-  });
-  console.log('io end')
+server.listen(port, () => {
+  console.log("server up on port " + port);
 });

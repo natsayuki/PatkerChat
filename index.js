@@ -20,6 +20,17 @@ app.use(express.static("static"));
 
 const port = process.env.PORT || 3000;
 
+const mysql = require('mysql');
+let con = mysql.createConnection({
+  host: 'local',
+  user: 'root',
+  password: '42turtle'
+});
+con.connection(function(err){
+  if(err) throw err;
+  console.log('connected');
+});
+
 io.on('connection', (socket) => {
   socket.on("message", (message)=>{
     console.log(message);

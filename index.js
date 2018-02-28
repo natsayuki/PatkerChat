@@ -22,7 +22,7 @@ const port = process.env.PORT || 3000;
 
 const mysql = require('mysql');
 let con = mysql.createConnection({
-  host: 'local',
+  host: 'localhost',
   user: 'root',
   password: '42turtle'
 });

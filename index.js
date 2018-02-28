@@ -25,11 +25,6 @@ con = mysql.createConnection({
   user: 'root',
   password: '42turtle'
 });
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
-console.log("after");
 io.on('connection', (socket) => {
   console.log('io start');
   socket.on("message", (message)=>{
@@ -44,14 +39,18 @@ io.on('connection', (socket) => {
     console.log(json);
     beamit(socket, 'returnWhisper', json);
   });
-  // socket.on('login', (json)=>{
-  //   console.log(`username: ${json['username']}, password: ${json['password']}`);
-  //   let sql = `SELECT * FROM users WHERE username = ${json['username']}`;
-  //   con.query(sql, function(err, result){
-  //     if(err) throw err;
-  //     console.log(result);
-  //   });
-  // });
+  socket.on('login', (json)=>{
+    con.connect(function(err) {
+      if (err) throw err;
+      console.log("Connected!");
+      console.log(`username: ${json['username']}, password: ${json['password']}`);
+      let sql = `SELECT * FROM users WHERE username = ${json['username']}`;
+      con.query(sql, function(err, result){
+        if(err) throw err;
+        console.log(result);
+      });
+    });
+  });
 
   console.log('after connect');
   server.listen(port, () => {

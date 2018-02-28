@@ -225,10 +225,21 @@ socket.on("return", (json)=>{
       }
     }
   }
+  $('#query').onClick(function(){
+    let json = {'username': $('#username').val(), 'password': $('#password').val()}
+    beamit(socket, 'login', json);
+  });
 
 });
 
     </script>
+    <form>
+      <input type='text' id='username'/>
+      <input type='text' id='password' />
+      <div id="query" style="width: 50px; height 50px; background-color: blue">
+        <p>query</p>
+      </div>
+    </form>
     <div align="center" class="chat_box_wrapper">
       <div class="chat_box_back">
         <div class="chat_box">

@@ -38,3 +38,22 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
   console.log("server up on port " + port);
 });
+
+var mysql = require('mysql');
+con = mysql.creatConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '42turtle'
+});
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+socket.on('login', (json)=>{
+  console.log(`username: ${json['username']}, password: ${json['password']}`);
+  let sql = `SELECT * FROM users WHERE username = ${json['username']}`;
+  con.query(sql, function(err, result){
+    if(err) throw err;
+    console.log(result);
+  });
+});

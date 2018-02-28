@@ -24,7 +24,8 @@ const mysql = require('mysql');
 let con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '42turtle'
+  password: '42turtle',
+  database: 'patker_chat'
 });
 con.connect(function(err) {
   if (err) throw err;
@@ -43,6 +44,13 @@ io.on('connection', (socket) => {
   socket.on('whisper', (json)=>{
     console.log(json);
     beamit(socket, 'returnWhisper', json);
+  });
+  socket.on('login', (json)=>{
+    console.log(json);
+    let sql = 'SELECT * FROM users WHERE username = ' + json['username'];
+    con.query(sql, function(err, result){
+      console.log(result);
+    });
   });
 });
 

@@ -49,6 +49,7 @@ io.on('connection', (socket) => {
     console.log(json);
     let sql = 'SELECT * FROM users WHERE username = ' + json['username'];
     con.query(sql, function(err, result){
+      if(err) throw err;
       console.log(result);
     });
   });

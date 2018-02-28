@@ -42,16 +42,18 @@ io.on('connection', (socket) => {
     console.log(json);
     beamit(socket, 'returnWhisper', json);
   });
-  socket.on('login', (json)=>{
-    console.log(`username: ${json['username']}, password: ${json['password']}`);
-    let sql = `SELECT * FROM users WHERE username = ${json['username']}`;
-    con.query(sql, function(err, result){
-      if(err) throw err;
-      console.log(result);
-  });
-});
+  // socket.on('login', (json)=>{
+  //   console.log(`username: ${json['username']}, password: ${json['password']}`);
+  //   let sql = `SELECT * FROM users WHERE username = ${json['username']}`;
+  //   con.query(sql, function(err, result){
+  //     if(err) throw err;
+  //     console.log(result);
+  //   });
+  // });
 
-console.log('after connect');
-server.listen(port, () => {
-  console.log("server up on port " + port);
+  console.log('after connect');
+  server.listen(port, () => {
+    console.log("server up on port " + port);
+  });
+
 });

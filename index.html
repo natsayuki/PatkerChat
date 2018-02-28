@@ -85,6 +85,9 @@ $(document).ready(function(){
   $('.emote_list_button').click(function(){
     $('.emote_list').toggle();
   });
+  $('#query').onClick(function(){
+    console.log('clicked');
+  });
 
 });
 
@@ -226,7 +229,7 @@ socket.on("return", (json)=>{
       }
     }
   }
-
+}
     </script>
     <input type='text' id='username'/>
     <input type='text' id='password' />

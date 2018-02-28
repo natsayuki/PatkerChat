@@ -31,6 +31,7 @@ con.connect(function(err) {
 });
 console.log("after");
 io.on('connection', (socket) => {
+  console.log('io start');
   socket.on("message", (message)=>{
     console.log(message);
     string = message["id"] + ": " + message['message']
@@ -56,5 +57,5 @@ io.on('connection', (socket) => {
   server.listen(port, () => {
     console.log("server up on port " + port);
   });
-
+  console.log('io end')
 });

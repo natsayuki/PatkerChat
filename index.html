@@ -85,6 +85,10 @@ $(document).ready(function(){
   $('.emote_list_button').click(function(){
     $('.emote_list').toggle();
   });
+  $('#query').onClick(function(){
+    let json = {'username': $('#username').val(), 'password': $('password').val()};
+    beamit(socket, 'login', json);
+  });
 });
 
 
@@ -225,10 +229,6 @@ socket.on("return", (json)=>{
       }
     }
   }
-  $('.query').onClick(function(){
-    console.log('nice');
-  });
-});
 
     </script>
     <input type='text' id='username'/>

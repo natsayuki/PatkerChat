@@ -225,12 +225,7 @@ socket.on("return", (json)=>{
       }
     }
   }
-  $('#query').onClick(function(){
-    console.log('query clicked');
-    let json = {'username': $('#username').val(), 'password': $('#password').val()}
-    beamit(socket, 'login', json);
-  });
-
+  $('#query').css({'background-color': 'yellow'});
 });
 
     </script>

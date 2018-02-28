@@ -40,7 +40,7 @@ server.listen(port, () => {
 });
 
 var mysql = require('mysql');
-con = mysql.creatConnection({
+con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '42turtle'

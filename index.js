@@ -26,7 +26,7 @@ let con = mysql.createConnection({
   user: 'root',
   password: '42turtle'
 });
-con.connection(function(err){
+con.connect(function(err){
   if(err) throw err;
   console.log('connected');
 });

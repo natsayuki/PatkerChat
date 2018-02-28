@@ -29,6 +29,7 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 });
+console.log("after");
 io.on('connection', (socket) => {
   socket.on("message", (message)=>{
     console.log(message);

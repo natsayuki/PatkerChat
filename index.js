@@ -29,7 +29,7 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 });
-
+console.log('after connect');
 io.on('connection', (socket) => {
   socket.on("message", (message)=>{
     console.log(message);
@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
     con.query(sql, function(err, result){
       if(err) throw err;
       console.log(result);
-    });
+  });
 });
 
 server.listen(port, () => {

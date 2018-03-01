@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
         if(hash.verify(json['password'], result['password'])) message = 'logged in as ' + json['username'];
         else message = 'username or password was incorrect';
       }
-      message = 'username or password was incorrect';
+      else message = 'username or password was incorrect';
       console.log('message: ' + message);
       beamit(socket, 'returnLogin', message)
     });

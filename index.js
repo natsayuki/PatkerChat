@@ -44,7 +44,7 @@ function checkName(name){
   else if(name.indexOf(' ') != -1){
     return 'name cannot contain spaces';
   }
-  else if(name.indexOf(/[^\x00-\x7F]/g) != -1){
+  else if(/[^\u0000-\u00ff]/.test(name))){
     return 'name can only contain ascii characters';
   }
   else{

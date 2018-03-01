@@ -63,6 +63,7 @@ io.on('connection', (socket) => {
       }
       message = 'username or password was incorrect';
     });
+    console.log(message);
     beamit(socket, 'returnLogin', message)
   });
   socket.on('signup', (json) => {
@@ -79,7 +80,6 @@ io.on('connection', (socket) => {
       message = "username already taken";
     }
     else{
-      console.log(json)
       username = json['username'];
       password = hash.generate(json['password']);
       sql = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
@@ -92,6 +92,7 @@ io.on('connection', (socket) => {
         }
       });
     }
+    console.log(message);
     beamit(socket, 'returnSignup', message);
   });
 });

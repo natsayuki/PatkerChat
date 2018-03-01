@@ -103,6 +103,7 @@ $(document).ready(function(){
   $('#loginGo').click(function(){
     let json = {'id': id, 'username': $('#loginUsername').val(), 'password': $('#loginPassword').val()};
     socket.emit('login', json);
+    $('#login-signup').css({'display': 'none'});
   });
   socket.on('returnSignup', (message)=>{
     if (message['id'] == id) $('#signupMessage').html(message['message']);

@@ -39,6 +39,7 @@ body{
   width: 100%;
   height: 100%;
   margin: 0px;
+  overflow: hidden;
 }
 .button{
   margin: 0px;
@@ -164,4 +165,12 @@ p{
   100%{
     background: rgb(153, 51, 255);
   }
+}
+#login{
+  width: 5rem;
+  height: 2rem;
+  background-color: blue;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }

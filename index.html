@@ -104,6 +104,7 @@ $(document).ready(function(){
     if(message['id'] == id){
       $('#loginMessage').html(message['message']);
       id = $('#loginUsername').val();
+      $('#loginText').html($('#loginUsername').val());
     }
   });
   socket.on('userCount', (count)=>{
@@ -244,7 +245,7 @@ socket.on("return", (json)=>{
       <div class="go" id="loginGo"><p align="center">go</p></div>
     </div>
     <div id='login'>
-      <p align="center">log in/sign up</p>
+      <p align="center" id="loginText">log in/sign up</p>
     </div>
     <p id="userCount" align="center">0 users here now</p>
     <div align="center" class="chat_box_wrapper">

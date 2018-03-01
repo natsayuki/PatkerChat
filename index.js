@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
       if(err) throw err;
       result = JSON.stringify(result);
       console.log(result);
-      console.log(result['username']);
+      console.log(result[0]['username']);
     });
   });
 });

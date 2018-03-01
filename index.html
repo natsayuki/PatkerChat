@@ -97,6 +97,12 @@ $(document).ready(function(){
     let json = {'username': $('#loginUsername').val(), 'password': $('#loginPassword').val()};
     socket.emit('login', json);
   });
+  socket.on('returnSignup', (message)=>{
+    $('#signupMessage').html(message);
+  });
+  socket.on('returnLogin', (message)=>{
+    $('#loginMessage').html(message);
+  });
 });
 
 
@@ -245,6 +251,7 @@ socket.on("return", (json)=>{
       <input align="center" class="input" id="signupUsername" type="text"/>
       <p align="center">password</p>
       <input align="center" class="input" id="signupPassword" type="password" />
+      <p align="center" id="signupMessage"></p>
       <br />
       <div class="go" id="signupGo"><p align="center">go</p></div>
       <h3 align="center">Log In</h3>
@@ -252,6 +259,7 @@ socket.on("return", (json)=>{
       <input align="center" class="input" id="loginUsername" type="text"/>
       <p align="center">password</p>
       <input align="center" class="input" id="loginPassword" type="password" />
+      <p align="center" id="loginMessage"></p>
       <br />
       <div class="go" id="loginGo"><p align="center">go</p></div>
     </div>

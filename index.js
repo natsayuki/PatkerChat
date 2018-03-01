@@ -57,8 +57,7 @@ io.on('connection', (socket) => {
       if(result){
         let clientHash = hash.generate(json['password']);
         console.log(clientHash);
-        let serverHash = hash.generate(result['password']);
-        if(clientHash == serverHash) console.log('logged in as ' + json['username']);
+        if(hash.verify(json['password'], result['password'])) console.log('logged in as ' + json['username']);
         else console.log('username or passsword is incorrect');
       }
       else console.log('no res');

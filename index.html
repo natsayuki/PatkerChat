@@ -104,6 +104,9 @@ $(document).ready(function(){
     $('#loginMessage').html(message);
     id = $('#loginUsername').val();
   });
+  socket.on('userCount', (count)=>{
+    $('#userCount').html(count + " users here now");
+  });
 });
 
 
@@ -241,6 +244,7 @@ socket.on("return", (json)=>{
     <div id='login'>
       <p align="center">log in/sign up</p>
     </div>
+    <p id="userCount" align="center">0 users here now</p>
     <div align="center" class="chat_box_wrapper">
       <div class="chat_box_back">
         <div class="chat_box">

@@ -227,6 +227,9 @@ p{
 .friendsSubTab{
   display: inline-block;
   background-color: lightgrey;
-  width: 3rem;
+  width: auto;
   height: 1.5rem;
+}
+#friendsTabWrapper{
+  width: 100%;
 }

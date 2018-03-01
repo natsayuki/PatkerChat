@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
         message = 'username or password was incorrect';
       }
       message = 'username or password was incorrect';
-    }).done(function(){console.log('done')});
+    }).promise().done(function(){console.log('done')});
     console.log('message: ' + message);
     beamit(socket, 'returnLogin', message)
   });
@@ -89,7 +89,7 @@ io.on('connection', (socket) => {
         if(result){
           message = 'succesfully signed up';
         }
-      }).done(function(){console.log('done')});
+      }).promise().done(function(){console.log('done')});
     }
     console.log('message: ' + message);
     beamit(socket, 'returnSignup', message);

@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
       }
       else message = 'username or password was incorrect';
       console.log('message: ' + message);
-      beamit(socket, 'returnLogin', message)
+      beamit(socket, 'returnLogin', {'id': json['id'],'message': message})
     });
   });
   socket.on('signup', (json) => {
@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
     let check = checkName(json['username']);
     if(check != 'good'){
       console.log('message; ' + check);
-      beamit(socket, 'returnSignup', check);
+      beamit(socket, 'returnSignup', {'id': json['id'], 'message': check});
     }
     else{
       let message = '';
@@ -101,7 +101,8 @@ io.on('connection', (socket) => {
         if(result){
           message = "username already taken";
           console.log('message: ' + message);
-          beamit(socket, 'returnSignup', message);
+          beamit(socket, 'returnSignup', {'id': json['id'], 'message': message});
+
         }
         else{
           username = json['username'];
@@ -114,11 +115,11 @@ io.on('connection', (socket) => {
             console.log(result);
             message = "signup succesful";
             console.log('message: ' + message);
-            beamit(socket, 'returnSignup', message);
+            beamit(socket, 'returnSignup', {'id': json['id'], 'message': message});
           });
         }
         console.log('message: ' + message);
-        beamit(socket, 'returnSignup', message);
+        beamit(socket, 'returnSignup', {'id': json['id'], 'message': message});
       });
 
     }

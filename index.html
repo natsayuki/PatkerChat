@@ -90,19 +90,21 @@ $(document).ready(function(){
     else $('#login-signup').css({'display': 'block'});
   });
   $('#signupGo').click(function(){
-    let json = {'username': $('#signupUsername').val(), 'password': $('#signupPassword').val()}
+    let json = {'id': id, 'username': $('#signupUsername').val(), 'password': $('#signupPassword').val()}
     socket.emit('signup', json);
   });
   $('#loginGo').click(function(){
-    let json = {'username': $('#loginUsername').val(), 'password': $('#loginPassword').val()};
+    let json = {'id': id, 'username': $('#loginUsername').val(), 'password': $('#loginPassword').val()};
     socket.emit('login', json);
   });
   socket.on('returnSignup', (message)=>{
-    $('#signupMessage').html(message);
+    if (message['id'] == id) $('#signupMessage').html(message);
   });
   socket.on('returnLogin', (message)=>{
-    $('#loginMessage').html(message);
-    id = $('#loginUsername').val();
+    if(message['id'] == id){
+      $('#loginMessage').html(message);
+      id = $('#loginUsername').val();      
+    }
   });
   socket.on('userCount', (count)=>{
     $('#userCount').html(count + " users here now");

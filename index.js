@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
     let sql = 'SELECT * FROM users WHERE username = "' + json['username'] + '"';
     con.query(sql, function(err, result){
       if(err) throw err;
-      result = JSON.stringify(result);
+      result = JSON.stringify(result[1]);
       console.log(result);
       console.log(result[0]);
     });

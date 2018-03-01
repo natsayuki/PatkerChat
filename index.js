@@ -62,9 +62,9 @@ io.on('connection', (socket) => {
         message = 'username or password was incorrect';
       }
       message = 'username or password was incorrect';
-    }).promise().done(function(){console.log('done')});
-    console.log('message: ' + message);
-    beamit(socket, 'returnLogin', message)
+      console.log('message: ' + message);
+      beamit(socket, 'returnLogin', message)
+    });
   });
   socket.on('signup', (json) => {
     let sql = 'SELECT * FROM users WHERE username = "' + json['username'] + '"';
@@ -74,25 +74,25 @@ io.on('connection', (socket) => {
       if(err) throw err;
       result = (JSON.parse(JSON.stringify(result)))[0];
       console.log(result);
+      if(result){
+        message = "username already taken";
+      }
+      else{
+        username = json['username'];
+        password = hash.generate(json['password']);
+        sql = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
+        con.query(sql, function(err, result){
+          if(err) throw err;
+          result = (JSON.parse(JSON.stringify(result)))[0];
+          console.log(result);
+          if(result){
+            message = 'succesfully signed up';
+          }
+          console.log('message: ' + message);
+          beamit(socket, 'returnSignup', message);
+        });
+      }
     });
-    if(result){
-      message = "username already taken";
-    }
-    else{
-      username = json['username'];
-      password = hash.generate(json['password']);
-      sql = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
-      con.query(sql, function(err, result){
-        if(err) throw err;
-        result = (JSON.parse(JSON.stringify(result)))[0];
-        console.log(result);
-        if(result){
-          message = 'succesfully signed up';
-        }
-      }).promise().done(function(){console.log('done')});
-    }
-    console.log('message: ' + message);
-    beamit(socket, 'returnSignup', message);
   });
 });
 

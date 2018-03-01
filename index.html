@@ -11,6 +11,7 @@
 const socket = io();
 
 let id = Math.floor(Math.random() * 10000000);
+let loggedin = false;
 socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');
@@ -86,8 +87,14 @@ $(document).ready(function(){
     $('.emote_list').toggle();
   });
   $('#login').click(function(){
-    if($('#login-signup').css('display') == 'block') $('#login-signup').css({'display': 'none'});
-    else $('#login-signup').css({'display': 'block'});
+    if(!loggedin){
+      if($('#login-signup').css('display') == 'block') $('#login-signup').css({'display': 'none'});
+      else $('#login-signup').css({'display': 'block'});
+    }
+    else{
+      if($('#profile').css('display') == 'block') $('#profile').css({'display': 'none'});
+      else $('#profile').css({'display': 'block'});
+    }
   });
   $('#signupGo').click(function(){
     let json = {'id': id, 'username': $('#signupUsername').val(), 'password': $('#signupPassword').val()}
@@ -105,6 +112,8 @@ $(document).ready(function(){
       $('#loginMessage').html(message['message']);
       id = $('#loginUsername').val();
       $('#loginText').html($('#loginUsername').val());
+      $('#profileName').html($('#loginUsername').val());
+      loggedin = true;
     }
   });
   socket.on('userCount', (count)=>{
@@ -243,6 +252,9 @@ socket.on("return", (json)=>{
       <p align="center" id="loginMessage"></p>
       <br />
       <div class="go" id="loginGo"><p align="center">go</p></div>
+    </div>
+    <div id="profile">
+      <h1 align="center" id="profileName">NAME</h1>
     </div>
     <div id='login'>
       <p align="center" id="loginText">log in/sign up</p>

@@ -173,3 +173,8 @@ p{
   top: 1rem;
   right: 1rem;
 }
+#login-signup{
+  width: 80%;
+  height: 90%;
+  margin: auto;
+}

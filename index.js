@@ -123,7 +123,7 @@ io.on('connection', (socket) => {
   });
 });
 io.on('disconnect', {
-  connections--;
+  connections -= 1;
   beamit(socket, 'userCount', connections);
 });
 

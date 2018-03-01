@@ -9,8 +9,6 @@ const io = socketio(server);
 
 const hash = require('password-hash');
 
-let connections = 0;
-
 function beamit(socket, back, message){
   socket.emit(back, message);
   socket.broadcast.emit(back, message);
@@ -49,8 +47,7 @@ function checkName(name){
 }
 
 io.on('connection', (socket) => {
-  connections++;
-  beamit(socket, 'userCount', connections);
+  beamit(socket, 'userCount', socket.engine.clientsCount);
   socket.on("message", (message)=>{
     console.log(message);
     string = message["id"] + ": " + message['message']

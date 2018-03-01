@@ -98,12 +98,12 @@ $(document).ready(function(){
     socket.emit('login', json);
   });
   socket.on('returnSignup', (message)=>{
-    if (message['id'] == id) $('#signupMessage').html(message);
+    if (message['id'] == id) $('#signupMessage').html(message['message']);
   });
   socket.on('returnLogin', (message)=>{
     if(message['id'] == id){
-      $('#loginMessage').html(message);
-      id = $('#loginUsername').val();      
+      $('#loginMessage').html(message['message']);
+      id = $('#loginUsername').val();
     }
   });
   socket.on('userCount', (count)=>{

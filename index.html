@@ -85,13 +85,17 @@ $(document).ready(function(){
   $('.emote_list_button').click(function(){
     $('.emote_list').toggle();
   });
-  $('#query').click(function(){
-    let json = {'username': $('#username').val(), 'password': $('#password').val()};
-    socket.emit('login', json);
-  });
   $('#login').click(function(){
     if($('#login-signup').css('display') == 'block') $('#login-signup').css({'display': 'none'});
     else $('#login-signup').css({'display': 'block'});
+  });
+  $('#signupGo').click(function(){
+    let json = {'username': $('signupUsername').val(), 'password': $('signupPassword').val()}
+    socket.emit('signup', json);
+  });
+  $('#loginGo').click(function(){
+    let json = {'username': $('#loginUsername').val(), 'password': $('#loginPassword').val()};
+    socket.emit('login', json);
   });
 });
 

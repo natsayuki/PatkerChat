@@ -50,6 +50,7 @@ io.on('connection', (socket) => {
   socket.on('login', (json)=>{
     console.log(json);
     let sql = 'SELECT * FROM users WHERE username = "' + json['username'] + '"';
+    let message = '';
     con.query(sql, function(err, result){
       if(err) throw err;
       result = (JSON.parse(JSON.stringify(result)))[0];
@@ -57,11 +58,39 @@ io.on('connection', (socket) => {
       if(result){
         let clientHash = hash.generate(json['password']);
         console.log(clientHash);
-        if(hash.verify(json['password'], result['password'])) console.log('logged in as ' + json['username']);
-        else console.log('username or passsword is incorrect');
+        if(hash.verify(json['password'], result['password'])) message = 'logged in as ' + json['username'];
+        message = 'username or password was incorrect';
       }
-      else console.log('no res');
+      message = 'username or password was incorrect';
     });
+    beamit(socket, 'returnLogin', message)
+  });
+  socket.on('signup', (json) => {
+    console.log(json);
+    let sql = 'SELECT * FROM users WHERE username = "' + json['username'] + '"';
+    let message = '';
+    con.query(sql, function(err, result){
+      if(err) throw err;
+      result = (JSON.parse(JSON.stringify(result)))[0];
+      console.log(result);
+    });
+    if(result){
+      message = "username already taken";
+    }
+    else{
+      username = json['username'];
+      password = hash.generate(json['password']);
+      sql = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
+      con.query(sql, function(err, result){
+        if(err) throw err;
+        result = (JSON.parse(JSON.stringify(result)))[0];
+        console.log(result);
+        if(result){
+          message = 'succesfully signed up';
+        }
+      });
+    }
+    beamit(socket, 'returnSignup', message);
   });
 });
 

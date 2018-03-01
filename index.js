@@ -34,6 +34,18 @@ con.connect(function(err) {
   console.log("Connected!");
 });
 
+function checkName(name){
+  if(name.length > 12){
+    return 'name must be a max of 12 characters'
+  }
+  elif(name.length == 0){
+    return 'name must be at least 1 character'
+  }
+  else{
+    return 'good';
+  }
+}
+
 io.on('connection', (socket) => {
   socket.on("message", (message)=>{
     console.log(message);
@@ -68,33 +80,42 @@ io.on('connection', (socket) => {
   });
   socket.on('signup', (json) => {
     let sql = 'SELECT * FROM users WHERE username = ?';
-    let message = '';
-    con.query(sql, [json['username']], function(err, result){
-      if(err) throw err;
-      result = (JSON.parse(JSON.stringify(result)))[0];
-      console.log(result);
-      if(result){
-        message = "username already taken";
-        console.log('message: ' + message);
-        beamit(socket, 'returnSignup', message);
-      }
-      else{
-        username = json['username'];
-        console.log(username)
-        password = hash.generate(json['password']);
-        sql = `INSERT INTO users (username, password) VALUES (?, ?)`;
-        con.query(sql, [username, password], function(err, result){
-          if(err) throw err;
-          result = (JSON.parse(JSON.stringify(result)))[0];
-          console.log(result);
-          message = "signup succesful";
+    let ckeck = checkName(json['username']);
+    if(check != 'good'){
+      console.log('message; ' check);
+      beamit(socket, 'returnSignup', check);
+    }
+    else{
+      let message = '';
+      con.query(sql, [json['username']], function(err, result){
+        if(err) throw err;
+        result = (JSON.parse(JSON.stringify(result)))[0];
+        console.log(result);
+        if(result){
+          message = "username already taken";
           console.log('message: ' + message);
           beamit(socket, 'returnSignup', message);
-        });
-      }
-    console.log('message: ' + message);
-    beamit(socket, 'returnSignup', message);
-    });
+        }
+        else{
+          username = json['username'];
+          console.log(username)
+          password = hash.generate(json['password']);
+          sql = `INSERT INTO users (username, password) VALUES (?, ?)`;
+          con.query(sql, [username, password], function(err, result){
+            if(err) throw err;
+            result = (JSON.parse(JSON.stringify(result)))[0];
+            console.log(result);
+            message = "signup succesful";
+            console.log('message: ' + message);
+            beamit(socket, 'returnSignup', message);
+          });
+        }
+        console.log('message: ' + message);
+        beamit(socket, 'returnSignup', message);
+      });
+      
+    }
+
   });
 });
 

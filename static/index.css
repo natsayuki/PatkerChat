@@ -219,3 +219,8 @@ p{
   width: 100%;
   height: 100%;
 }
+#sideWrapper{
+  position: relative;
+  left: 0px;
+  top: 0px;
+}

@@ -120,6 +120,11 @@ $(document).ready(function(){
   socket.on('userCount', (count)=>{
     $('#userCount').html(count + " users here now");
   });
+  $('#logout').click(function(){
+    $('#profile').css({'display': 'none'});
+    id = Math.floor(Math.random() * 10000000);
+    loggedin = false;
+  });
 });
 
 
@@ -256,6 +261,9 @@ socket.on("return", (json)=>{
     </div>
     <div id="profile">
       <h1 align="center" id="profileName">NAME</h1>
+      <div id="logout">
+        <p align="center">logout</p>
+      </div>
     </div>
     <div id='login'>
       <p align="center" id="loginText">log in/sign up</p>

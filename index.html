@@ -10,7 +10,7 @@
     <script>
 const socket = io();
 
-lest id = Math.floor(Math.random() * 10000000);
+let id = Math.floor(Math.random() * 10000000);
 socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');

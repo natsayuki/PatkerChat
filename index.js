@@ -122,8 +122,8 @@ io.on('connection', (socket) => {
 
   });
 });
-io.on('disconnect', {
-  connections -= 1;
+io.on('disconnect', (socket) => {
+  connections--;
   beamit(socket, 'userCount', connections);
 });
 

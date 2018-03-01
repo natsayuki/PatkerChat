@@ -1,6 +1,7 @@
 .chat_box_wrapper{
   width: auto;
   height: 100%;
+  overflow: hidden;
 }
 .chat_box_back{
   width: 50%;

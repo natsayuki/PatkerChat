@@ -41,6 +41,9 @@ function checkName(name){
   else if(name.length == 0){
     return 'name must be at least 1 character'
   }
+  else if(name.indexOf(' ') == -1){
+    return 'name cannot contain spaces';
+  }
   else{
     return 'good';
   }

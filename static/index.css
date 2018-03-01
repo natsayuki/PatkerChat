@@ -206,3 +206,8 @@ p{
   margin: 0 auto;
   display: block;
 }
+.tab{
+  background-color: lightgrey;
+  height: 2rem;
+  width: 5rem;
+}

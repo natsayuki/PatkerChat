@@ -7,6 +7,8 @@ const app = express();
 const server = http.Server(app);
 const io = socketio(server);
 
+const hash = require('password-hash');
+
 function beamit(socket, back, message){
   socket.emit(back, message);
   socket.broadcast.emit(back, message);
@@ -53,7 +55,10 @@ io.on('connection', (socket) => {
       result = (JSON.parse(JSON.stringify(result)))[0];
       console.log(result);
       if(result){
-        if(json['password'] == result['password']) console.log('logged in as ' + json['username']);
+        let clientHash = hash.generate(json['password']);
+        console.log(clientHash);
+        let serverHash = hash.generate(result['password']);
+        if(clientHash == serverHash) console.log('logged in as ' + json['username']);
         else console.log('username or passsword is incorrect');
       }
       else console.log('no res');

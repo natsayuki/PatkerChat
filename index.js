@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
     let sql = 'SELECT * FROM users WHERE username = ?';
     let ckeck = checkName(json['username']);
     if(check != 'good'){
-      console.log('message; ' check);
+      console.log('message; ' + check);
       beamit(socket, 'returnSignup', check);
     }
     else{

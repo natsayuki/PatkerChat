@@ -211,3 +211,11 @@ p{
   height: 2rem;
   width: 5rem;
 }
+.selected{
+  background-color: yellow;
+}
+#friendsPage{
+  display: none;
+  width: 100%;
+  height: 100%;
+}

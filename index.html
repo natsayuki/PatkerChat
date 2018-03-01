@@ -126,6 +126,18 @@ $(document).ready(function(){
     loggedin = false;
     $('#loginText').html('log in/sign up')
   });
+  $('#friendsTab').click(function{
+    $('.tab').removeClass('selected');
+    $('#friendsTab').addClass('selected');
+    $('.page').css({'display': 'none'});
+    $('#friendsPage').css({'display': 'block'});
+  });
+  $('#profileTab').click(function(){
+    $('.tab').removeClass('selected');
+    $('#profileTab').addClass('selected');
+    $('.page').css({'display': 'none'});
+    $('#profilePage').css({'display': 'block'});
+  });
 });
 
 
@@ -261,13 +273,28 @@ socket.on("return", (json)=>{
       <div class="go" id="loginGo"><p align="center">go</p></div>
     </div>
     <div id="profile">
-      <h1 align="center" id="profileName">NAME</h1>
       <div id="sideWrapper">
-        <div id="profileTab" class="tab"><h2 align="center">Profile</h2></div>
+        <div id="profileTab" class="tab selected"><h2 align="center">Profile</h2></div>
         <div id="friendsTab" class="tab"><h2 align="center">Friends</h2></div>
       </div>
-      <div id="logout">
-        <p align="center">logout</p>
+      <div id="profilePage" class="page">
+        <h1 align="center" id="profileName">NAME</h1>
+        <div id="logout">
+          <p align="center">logout</p>
+        </div>
+      </div>
+      <div id="friendsPage" class="page">
+        <h1 align="center">Friends</h1>
+        <div id="friendsTabWrapper">
+          <div id="friendsListTab"><p align="center">Friends List</p></div>
+          <div id="requestsTab"><p align="center">Requests</p></div>
+        </div>
+        <div id="friendsListPage">
+          <h1 align="center">FRIENDS GO HERE</h1>
+        </div>
+        <div id="requestsPage">
+          <h1 align="center">REQUESTS GO HERE</h1>
+        </div>
       </div>
     </div>
     <div id='login'>

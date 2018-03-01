@@ -120,8 +120,7 @@ io.on('connection', (socket) => {
   });
 });
 io.on('disconnect', (socket) => {
-  connections--;
-  beamit(socket, 'userCount', connections);
+  beamit(socket, 'userCount', io.engine.clientsCount);
 });
 
 server.listen(port, () => {

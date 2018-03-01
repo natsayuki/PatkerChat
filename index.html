@@ -191,7 +191,7 @@ function sendMessage(){
     //       socket.emit('whisper', {'to': to, 'from': id, 'message': toMessage})
     //   }
     // }
-    const to = message[message.find('('): message.find(')')];
+    const to = message.substring(message.find('('), message.find(')'));
     console.log(to);
   }
   else{
@@ -202,7 +202,7 @@ function sendMessage(){
 
   $('.input_box').val("");
 
-}
+};
 
 $(document).keypress(function(e){
   if(e.which == 13 && $('.input_box').is(":focus")){

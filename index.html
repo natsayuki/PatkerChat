@@ -162,35 +162,6 @@ function emotify(string){
 function sendMessage(){
   let message = $('.input_box').val();
   if(message.substring(0, 8) == ':whisper'){
-    // const regex = /:whisper[(][0-9]{1,8}[)]/g;
-    // const str = message;
-    // let m;
-    //
-    // while ((m = regex.exec(str)) !== null) {
-    //   // This is necessary to avoid infinite loops with zero-width matches
-    //   if (m.index === regex.lastIndex) {
-    //       regex.lastIndex++;
-    //   }
-    //
-    //   // The result can be accessed through the `m`-variable.
-    //   const regex1 = /[(][0-9]{1,8}[)]/g;
-    //   const str1 = m[0];
-    //   let m1;
-    //
-    //   while ((m1 = regex1.exec(str1)) !== null) {
-    //       // This is necessary to avoid infinite loops with zero-width matches
-    //       if (m1.index === regex1.lastIndex) {
-    //           regex1.lastIndex++;
-    //       }
-    //
-    //       // The result can be accessed through the `m`-variable.
-    //       let to = m1[0].replaceAll(')', '').replaceAll('(', '');
-    //       console.log(to);
-    //       let toMessage = message.replace(m[0], '');
-    //       console.log(toMessage);
-    //       socket.emit('whisper', {'to': to, 'from': id, 'message': toMessage})
-    //   }
-    // }
     const to = message.substring(message.indexOf('(') + 1, message.indexOf(')'));
     message = message.substring(message.indexOf(')')+1);
     socket.emit('whisper', {'to': to, 'from': id, 'message': message});

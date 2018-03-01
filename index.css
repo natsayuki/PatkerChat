@@ -10,11 +10,14 @@
   width: 80%;
   height: 10%
 }
-.login{
+#login{
   width: 5rem;
   height: 2rem;
   background-color: blue;
   position: absolute;
   top: 1rem;
   right: 1rem;
+}
+body{
+  overflow: hidden;
 }

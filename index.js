@@ -35,6 +35,7 @@ con.connect(function(err) {
 });
 
 function checkName(name){
+  name = name.replace(/[^\x00-\x7F]/g, "");
   if(name.length > 12){
     return 'name must be a max of 12 characters'
   }

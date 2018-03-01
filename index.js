@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
       if(err) throw err;
       result = JSON.parse(JSON.stringify(result))[0];
       console.log(result);
-      if(json['password'] == resutl['passowrd']) console.log('logged in as ' + json['username']);
+      if(json['password'] == result['passowrd']) console.log('logged in as ' + json['username']);
       console.log('username or passsword is incorrect');
     });
   });

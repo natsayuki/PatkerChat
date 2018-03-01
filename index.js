@@ -63,11 +63,10 @@ io.on('connection', (socket) => {
       }
       message = 'username or password was incorrect';
     });
-    console.log(message);
+    console.log('message: ' + message);
     beamit(socket, 'returnLogin', message)
   });
   socket.on('signup', (json) => {
-    console.log(json);
     let sql = 'SELECT * FROM users WHERE username = "' + json['username'] + '"';
     let message = '';
     result = null;
@@ -92,7 +91,7 @@ io.on('connection', (socket) => {
         }
       });
     }
-    console.log(message);
+    console.log('message: ' + message);
     beamit(socket, 'returnSignup', message);
   });
 });

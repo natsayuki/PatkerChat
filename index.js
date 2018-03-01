@@ -86,6 +86,7 @@ io.on('connection', (socket) => {
           if(err) throw err;
           result = (JSON.parse(JSON.stringify(result)))[0];
           console.log(result);
+          message = "signup succesful";
           console.log('message: ' + message);
           beamit(socket, 'returnSignup', message);
         });

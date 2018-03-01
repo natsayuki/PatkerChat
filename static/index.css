@@ -181,6 +181,7 @@ p{
   top: 5%;
   left: 10%;
   z-index: 2;
+  display: None;
 }
 .input{
   margin: auto;

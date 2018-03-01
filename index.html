@@ -90,7 +90,7 @@ $(document).ready(function(){
     else $('#login-signup').css({'display': 'block'});
   });
   $('#signupGo').click(function(){
-    let json = {'username': $('signupUsername').val(), 'password': $('signupPassword').val()}
+    let json = {'username': $('#signupUsername').val(), 'password': $('#signupPassword').val()}
     socket.emit('signup', json);
   });
   $('#loginGo').click(function(){

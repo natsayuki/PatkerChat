@@ -177,4 +177,6 @@ p{
   width: 80%;
   height: 90%;
   margin: auto;
+  background-color: aqua;
+  position: absolute;
 }

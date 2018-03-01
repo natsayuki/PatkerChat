@@ -166,9 +166,9 @@ p{
   }
 }
 #login{
-  width: 5rem;
+  width: 8rem;
   height: 2rem;
-  background-color: blue;
+  background-color: aqua;
   position: absolute;
   top: 1rem;
   right: 1rem;

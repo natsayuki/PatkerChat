@@ -38,7 +38,7 @@ function checkName(name){
   if(name.length > 12){
     return 'name must be a max of 12 characters'
   }
-  elif(name.length == 0){
+  else if(name.length == 0){
     return 'name must be at least 1 character'
   }
   else{
@@ -113,7 +113,7 @@ io.on('connection', (socket) => {
         console.log('message: ' + message);
         beamit(socket, 'returnSignup', message);
       });
-      
+
     }
 
   });

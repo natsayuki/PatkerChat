@@ -35,7 +35,6 @@ con.connect(function(err) {
 });
 
 function checkName(name){
-  name = name.replace(/[^\x00-\x7F]/g, "");
   if(name.length > 12){
     return 'name must be a max of 12 characters'
   }
@@ -44,6 +43,9 @@ function checkName(name){
   }
   else if(name.indexOf(' ') != -1){
     return 'name cannot contain spaces';
+  }
+  else if(name.indexOf(/[^\x00-\x7F]/g) != -1){
+    return 'name can only contain ascii characters';
   }
   else{
     return 'good';

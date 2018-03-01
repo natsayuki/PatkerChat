@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
     });
   });
   socket.on('signup', (json) => {
-    let sql = 'SELECT * FROM users WHERE username = "' + json['username'] + '"';
+    let sql = 'SELECT * FROM users WHERE username = "' + con.escape(json['username']) + '"';
     let message = '';
     con.query(sql, function(err, result){
       if(err) throw err;
@@ -80,6 +80,7 @@ io.on('connection', (socket) => {
       }
       else{
         username = con.escape(json['username']);
+        console.log(username)
         password = hash.generate(json['password']);
         sql = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
         con.query(sql, function(err, result){

@@ -75,6 +75,8 @@ io.on('connection', (socket) => {
       console.log(result);
       if(result){
         message = "username already taken";
+        console.log('message: ' + message);
+        beamit(socket, 'returnSignup', message);
       }
       else{
         username = json['username'];
@@ -88,6 +90,8 @@ io.on('connection', (socket) => {
           beamit(socket, 'returnSignup', message);
         });
       }
+    console.log('message: ' + message);
+    beamit(socket, 'returnSignup', message);
     });
   });
 });

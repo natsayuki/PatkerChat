@@ -47,7 +47,7 @@ function checkName(name){
 }
 
 io.on('connection', (socket) => {
-  beamit(socket, 'userCount', 0);
+  beamit(socket, 'userCount', io.sockets.clients().length);
   socket.on("message", (message)=>{
     console.log(message);
     string = message["id"] + ": " + message['message']

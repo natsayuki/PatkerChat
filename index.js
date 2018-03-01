@@ -69,6 +69,7 @@ io.on('connection', (socket) => {
     console.log(json);
     let sql = 'SELECT * FROM users WHERE username = "' + json['username'] + '"';
     let message = '';
+    result = null;
     con.query(sql, function(err, result){
       if(err) throw err;
       result = (JSON.parse(JSON.stringify(result)))[0];

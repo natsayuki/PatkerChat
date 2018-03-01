@@ -102,6 +102,7 @@ $(document).ready(function(){
   });
   socket.on('returnLogin', (message)=>{
     $('#loginMessage').html(message);
+    id = $('#loginUsername');
   });
 });
 

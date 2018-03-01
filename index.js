@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
       message = "username already taken";
     }
     else{
+      console.log(json)
       username = json['username'];
       password = hash.generate(json['password']);
       sql = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;

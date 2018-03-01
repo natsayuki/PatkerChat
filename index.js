@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
       result = JSON.parse(JSON.stringify(result))[0];
       console.log(result);
       if(json['password'] == result['password']) console.log('logged in as ' + json['username']);
-      console.log('username or passsword is incorrect');
+      else console.log('username or passsword is incorrect');
     });
   });
 });

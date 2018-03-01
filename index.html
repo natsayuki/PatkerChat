@@ -192,7 +192,8 @@ function sendMessage(){
     //   }
     // }
     const to = message.substring(message.indexOf('(') + 1, message.indexOf(')'));
-    console.log(to);
+    message = message.substring(message.indexOf(')'));
+    socket.emit('whisper', {'to': to, 'from': id, 'message': message});
   }
   else{
     socket.emit("message",

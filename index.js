@@ -139,6 +139,7 @@ io.on('connection', (socket) => {
         con.query(sql, [id], function(err, result){
           if(err) throw err;
           result = (JSON.parse(JSON.stringify(result)))[0];
+          console.log(friends)
           if(result['friends'].indexOf[friend] != -1) message = 'user already in your friends list';
           else{
             sql = `INSERT INTO friendRequests (id, friend) VALUES (?, ?)`;

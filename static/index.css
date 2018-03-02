@@ -257,8 +257,8 @@ p{
 }
 .accept, .deny{
   display: inline-block;
-  width: 3rem;
-  height: 1.5rem;
+  width: 3.5rem;
+  height: 2rem;
 }
 .accept-deny{
   padding: 0px;

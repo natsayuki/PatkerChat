@@ -249,3 +249,14 @@ p{
   position: absolute;
   margin: auto;
 }
+.accept{
+  background-color: green;
+}
+.deny{
+  background-color: red;
+}
+.accept, .deny{
+  display: inline-block;
+  width: 3rem;
+  height: 1.5rem;
+}

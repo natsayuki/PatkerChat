@@ -185,7 +185,18 @@ socket.on('returnOutgoingRequests', (json)=>{
   }
 });
 socket.on('returnIncomingRequests', (json)=>{
-  if(json['id'] == id) incomingRequests = json['requests'];
+  if(json['id'] == id){
+    incomingRequests = json['requests'];
+    console.log(incomingRequests)
+    for(request in incomingRequests){
+      console.log(request);
+      $('#incomingRequests').append(`
+        <div class="incomingRequest">
+          <h3 align="center">to ` + incomingRequests[request]['friend'] + `</h3>
+        </div>
+        `)
+    }
+  }
 });
 socket.on('returnFriends', (json)=>{
   if(json['id'] == id) friends = json['friends'];

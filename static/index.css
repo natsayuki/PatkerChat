@@ -258,7 +258,7 @@ p{
 .accept, .deny{
   display: inline-block;
   width: 3.5rem;
-  height: 2rem;
+  height: 1.5rem;
 }
 .accept-deny{
   padding: 0px;

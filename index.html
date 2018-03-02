@@ -138,6 +138,18 @@ $(document).ready(function(){
     $('.page').css({'display': 'none'});
     $('#profilePage').css({'display': 'block'});
   });
+  $('#friendsListTab').click(function(){
+    $('.friendsSubTab').removeClass('selected');
+    $('.friendsSubPage').css({'display': 'none'});
+    $('#friendsListTab').addClass('selected');
+    $('#friendsListPage').css({'display': 'block'});
+  });
+  $('#requestsTab').click(function(){
+    $('.friendsSubTab').removeClass('selected');
+    $('.friendsSubPage').css({'display': 'none'});
+    $('#requestsTab').addClass('selected');
+    $('#requestsPage').css({'display': 'block'});
+  });
 });
 
 
@@ -286,13 +298,13 @@ socket.on("return", (json)=>{
       <div id="friendsPage" class="page">
         <h1 align="center">Friends</h1>
         <div id="friendsTabWrapper">
-          <div id="friendsListTab" class="friendsSubTab"><p align="center">Friends List</p></div>
+          <div id="friendsListTab" class="friendsSubTab selected"><p align="center">Friends List</p></div>
           <div id="requestsTab" class="friendsSubTab"><p align="center">Requests</p></div>
         </div>
-        <div id="friendsListPage">
+        <div id="friendsListPage" class="friendsSubPage">
           <h1 align="center">FRIENDS GO HERE</h1>
         </div>
-        <div id="requestsPage">
+        <div id="requestsPage" class="friendsSubPage">
           <h1 align="center">REQUESTS GO HERE</h1>
         </div>
       </div>

@@ -242,7 +242,8 @@ p{
 }
 #outgoingRequests, #incomingRequests{
   display: inline-block;
-  background-color: lightgrey
+  background-color: lightgrey;
+  margin: auto;
 }
 #requestWrapper{
   position: absolute;

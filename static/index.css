@@ -212,7 +212,7 @@ p{
   width: 5rem;
 }
 .selected{
-  background-color: yellow;
+  background-color: yellow !important;
 }
 #friendsPage{
   display: none;

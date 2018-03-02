@@ -193,8 +193,8 @@ socket.on('returnIncomingRequests', (json)=>{
       $('#incomingRequests').append(`
         <div class="incomingRequest">
           <h3 align="center" class="incomingRequestEntery">from ` + incomingRequests[request]['friend'] + `</h3>
-          <div class="accept"><h3 align="center">accept</h3></div>
-          <div class="deny"><h3 align="center">deny</h3></div>
+          <div class="accept"><h3 align="center" class="accept-deny">accept</h3></div>
+          <div class="deny"><h3 align="center" class="accept-deny">deny</h3></div>
         </div>
         `)
     }

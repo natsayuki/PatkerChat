@@ -108,12 +108,12 @@ $(document).ready(function(){
     if (message['id'] == id) $('#signupMessage').html(message['message']);
   });
   socket.on('returnLogin', (message)=>{
+    $('#loginMessage').html(message['message']);
     if(message['id'] == id && message['message'] == 'logged in as ' + $('#loginUsername').val()){
-      $('#loginMessage').html(message['message']);
+      $('#login-signup').css({'display': 'none'});
       id = $('#loginUsername').val();
       $('#loginText').html($('#loginUsername').val());
       $('#profileName').html($('#loginUsername').val());
-      $('#login-signup').css({'display': 'none'});
       loggedin = true;
     }
   });

@@ -237,3 +237,6 @@ p{
 #requestsPage{
   display: none;
 }
+#addFriendsGo, #addFriend{
+  display:inline-block;
+}

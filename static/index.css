@@ -261,6 +261,6 @@ p{
   height: 1.5rem;
 }
 .accept-deny{
-  padding: none;
-  margin: none;
+  padding: 0px;
+  margin: 0px;
 }

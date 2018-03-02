@@ -171,7 +171,16 @@ $(document).ready(function(){
   });
 });
 socket.on('returnOutgoingRequests', (json)=>{
-  if(json['id'] == id) outgoingRequests = json['requests'];
+  if(json['id'] == id){
+    outgoingRequests = json['requests'];
+    for(request in outgoingRequests){
+      $('#outgoingRequests').append(`
+        <div class="outgoingRequest">
+          <h2 align="center">to ` + request['friend'] + `</h2>
+        </div>
+        `)
+    }
+  }
 });
 socket.on('returnIncomingRequests', (json)=>{
   if(json['id'] == id) incomingRequests = json['requests'];
@@ -345,7 +354,7 @@ socket.on("return", (json)=>{
           <p align="center" id="addFriendResult"></p>
           <br />
           <div id="addFriendsGo" class="go"><p align="center">go</p></div>
-
+          <div id="outgoingRequests"></div>
         </div>
       </div>
     </div>

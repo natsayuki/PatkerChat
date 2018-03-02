@@ -120,7 +120,7 @@ $(document).ready(function(){
       loggedin = true;
       socket.emit('getOutgoingRequests', {'id': id});
       socket.emit('getIncomingRequests', {'id': id});
-      socket.emit('getFriends'm {'id': id});
+      socket.emit('getFriends', {'id': id});
     }
   });
   socket.on('userCount', (count)=>{

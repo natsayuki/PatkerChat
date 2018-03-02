@@ -162,6 +162,7 @@ io.on('connection', (socket) => {
     sql = `SELECT * FROM friendRequests WHERE id=?`;
     con.query(sql, [json['id']], function(err, result){
       if(err) throw err;
+      result = (JSON.parse(JSON.stringify(result)));
       console.log(result)
       beamit(socket, 'returnOutgoingRequests', {'id': json['id'], 'requests': result})
     });
@@ -170,6 +171,7 @@ io.on('connection', (socket) => {
     sql = `SELECT * FROM friendRequests WHERE friend=?`;
     con.query(sql, [json['id']], function(err, result){
       if(err) throw err;
+      result = (JSON.parse(JSON.stringify(result)));
       console.log(result);
       beamit(socket, 'returnIncomingRequests', {'id': json['id'], 'requests': result})
     });

@@ -121,9 +121,9 @@ io.on('connection', (socket) => {
         console.log('message: ' + message);
         beamit(socket, 'returnSignup', {'id': json['id'], 'message': message});
       });
-
     }
 
+  )
   });
   socket.on('addFriend', (json)=>{
     console.log(json);

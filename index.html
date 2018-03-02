@@ -169,6 +169,14 @@ $(document).ready(function(){
       $('#addFriendResult').html(json['message']);
     }
   });
+  $('.accept').click(function(){
+    let username = $(this).parent().attr('username');
+    console.log(username);
+  });
+  $('.deny').click(function(){
+    let username = $(this).parent().attr('username');
+    console.log(username);
+  });
 });
 socket.on('returnOutgoingRequests', (json)=>{
   if(json['id'] == id){

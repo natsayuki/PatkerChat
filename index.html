@@ -19,6 +19,9 @@ socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');
 
+const hallo = new Audio('audio/hallo.mp3');
+const wow = new Audio('audio/wow.mp3');
+
 emotes = ["Kappa", "Ogre", "Spiffy", "Nerd", "Ryab", "StarWarsExpert", "Gersoxl", "Patker", "Porker", "Parkour", "Dude", "IDK", "Horse", "Peanut", "Panda", "BTC"
 , "MonkaHyper", "Brit", "GnomeChild", "SurprisePatker", "WOW", "Noodle"];
 
@@ -198,6 +201,14 @@ function emotify(string){
   const emoteRegEx = emotes.join('|');
   const regex = new RegExp(`:(${emoteRegEx})(-[sfrcgwb](-[sfrcgwb])?)`, 'g');
   const match = string.match(regex);
+  if(string.indexOf(':WOW') != -1){
+    wow.currentTime = 0;
+    wow.play();
+  }
+  else if(string.indexOf(':Noodle') != -1){
+    hallo.currentTime = 0;
+    hallo.play();
+  }
   matches = [];
   if(match){
     for(result of match){

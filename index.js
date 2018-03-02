@@ -121,9 +121,9 @@ io.on('connection', (socket) => {
         console.log('message: ' + message);
         beamit(socket, 'returnSignup', {'id': json['id'], 'message': message});
       });
+
     }
 
-  )
   });
   socket.on('addFriend', (json)=>{
     console.log(json);
@@ -180,7 +180,7 @@ io.on('connection', (socket) => {
       if(err) throw err;
       result = (JSON.parse(JSON.stringify(result)))[0];
       console.log(result)
-      beamit(socket, 'returnFriends', {'id': json['id'], 'friends': result['friends']});
+      beamit(socket, 'returnFriends', {'id': json['id'], 'friends': result['friends']})
     });
   });
 });

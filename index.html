@@ -12,6 +12,9 @@ const socket = io();
 
 let id = Math.floor(Math.random() * 10000000);
 let loggedin = false;
+let friends = [];
+let outgoingRequests = [];
+let incomingRequests = [];
 socket.emit("id", id);
 const input = $('.input_box');
 const chat = $('.chat_box');
@@ -115,6 +118,9 @@ $(document).ready(function(){
       $('#loginText').html($('#loginUsername').val());
       $('#profileName').html($('#loginUsername').val());
       loggedin = true;
+      socket.emit('getOutgoingRequests', {'id': id});
+      socket.emit('getIncomingRequests', {'id': id});
+      socket.emit('getFriends'm {'id': id});
     }
   });
   socket.on('userCount', (count)=>{
@@ -161,7 +167,15 @@ $(document).ready(function(){
     }
   });
 });
-
+socket.on('returnOutgoingRequests', (json)=>{
+  if(json['id'] == id) outgoingRequests = json['requests'];
+});
+socket.on('returnIncomingRequests', (json)=>{
+  if(json['id'] == id) incomingRequests = json['requests'];
+});
+socket.on('returnFriends', (json)=>{
+  if(json['id'] == id) friends = json['friends'];
+});
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;

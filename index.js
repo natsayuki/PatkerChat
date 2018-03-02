@@ -158,6 +158,31 @@ io.on('connection', (socket) => {
       beamit(socket, 'returnAddFriend', {'id': id, 'message': message});
     });
   });
+  socket.on('getOutgoingRequests', (json)=>{
+    sql = `SELECT * FROM friendRequests WHERE id=?`;
+    con.query(sql, [json['id']], function(err, result){
+      if(err) throw err;
+      console.log(result)
+      beamit(socket, 'returnOutgoingRequests', {'id': json['id'], 'requests': result})
+    });
+  });
+  socket.on('getIncomingRequests', (json)=>{
+    sql = `SELECT * FROM friendRequests WHERE friend=?`;
+    con.query(sql, [json['id']], function(err, result){
+      if(err) throw err;
+      console.log(result);
+      beamit(socket, 'returnIncomingRequests', {'id': json['id'], 'requests': result})
+    });
+  });
+  socket.on('getFriends', (json)=>{
+    sql = `SELECT * FROM users WHERE username=?`
+    con.query(sql, [json['id']], function(err, result){
+      if(err) throw err;
+      result = (JSON.parse(JSON.stringify(result)))[0];
+      console.log(result)
+      beamit(socket, 'returnFriends', {'id': json['id'], 'friends': result['friends']});
+    });
+  });
 });
 io.on('disconnect', (socket) => {
   beamit(socket, 'userCount', io.engine.clientsCount);

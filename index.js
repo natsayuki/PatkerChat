@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
           username = json['username'];
           console.log(username)
           password = hash.generate(json['password']);
-          sql = `INSERT INTO users (username, password) VALUES (?, ?)`;
+          sql = `INSERT INTO users (username, password, friends) VALUES (?, ?, "[]")`;
           con.query(sql, [username, password], function(err, result){
             if(err) throw err;
             result = (JSON.parse(JSON.stringify(result)))[0];

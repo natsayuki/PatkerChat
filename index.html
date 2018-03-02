@@ -178,7 +178,7 @@ socket.on('returnOutgoingRequests', (json)=>{
       console.log(request);
       $('#outgoingRequests').append(`
         <div class="outgoingRequest">
-          <h3 align="center">to ` + request['friend'] + `</h3>
+          <h3 align="center">to ` + outgoingRequests[request]['friend'] + `</h3>
         </div>
         `)
     }

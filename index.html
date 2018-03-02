@@ -173,6 +173,7 @@ $(document).ready(function(){
 socket.on('returnOutgoingRequests', (json)=>{
   if(json['id'] == id){
     outgoingRequests = json['requests'];
+    consoel.log(outgoingRequests)
     for(request in outgoingRequests){
       console.log(request);
       $('#outgoingRequests').append(`

@@ -174,9 +174,10 @@ socket.on('returnOutgoingRequests', (json)=>{
   if(json['id'] == id){
     outgoingRequests = json['requests'];
     for(request in outgoingRequests){
+      console.log(request);
       $('#outgoingRequests').append(`
         <div class="outgoingRequest">
-          <h2 align="center">to ` + request['friend'] + `</h2>
+          <h3 align="center">to ` + request['friend'] + `</h3>
         </div>
         `)
     }

@@ -237,3 +237,6 @@ p{
 #requestsPage{
   display: none;
 }
+#addFriendResult{
+  display: none;
+}

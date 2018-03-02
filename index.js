@@ -125,6 +125,38 @@ io.on('connection', (socket) => {
     }
 
   });
+  socket.on('addFriend', (json)=>{
+    console.log(json);
+    let id = json['id'];
+    let friend = json['friend'];
+    sql = `SELECT * FROM users WHERE username=?`;
+    let message ='';
+    con.query(sql, [friend], function(err, result){
+      if(err) throw err;
+      result = (JSON.parse(JSON.stringify(result)))[0];
+      if(!result) message = 'user does not exist';
+      else{
+        con.query(sql, [id], function(err, result){
+          if(err) throw err;
+          result = (JSON.parse(JSON.stringify(result)))[0];
+          if(result['friends'].indexOf[friend] != -1) message = 'user already in your friends list';
+          else{
+            sql = `INSERT INTO friendRequests (id, friend) VALUES (?, ?)`;
+            con.query(sql, [id, friend], function(err, result){
+              if(err) throw err;
+              message = 'friend request sent';
+              console.log(message);
+              beamit(socket, 'returnAddFriend', {'id': id, 'message': message});
+            });
+          }
+          console.log(message);
+          beamit(socket, 'returnAddFriend', {'id': id, 'message': message});
+        });
+      }
+      console.log(message);
+      beamit(socket, 'returnAddFriend', {'id': id, 'message': message});
+    });
+  });
 });
 io.on('disconnect', (socket) => {
   beamit(socket, 'userCount', io.engine.clientsCount);

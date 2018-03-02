@@ -150,6 +150,16 @@ $(document).ready(function(){
     $('#requestsTab').addClass('selected');
     $('#requestsPage').css({'display': 'block'});
   });
+  $('#addFriendsGo').click(function(){
+    let friend = $('#addFriend').val();
+    socket.emit('addFriend', {'id': id, 'friend': friend});
+  });
+  socket.on('returnAddFriend', (json)=>{
+    if(id == json['id']){
+      $('#addFriendResult').css({'display': 'block'});
+      $('#addFriendResult').html(json['message']);
+    }
+  });
 });
 
 
@@ -306,6 +316,7 @@ socket.on("return", (json)=>{
         </div>
         <div id="requestsPage" class="friendsSubPage">
           <h2 align="center">add a friend</h2>
+          <p align="center" id="addFriendResult"></p>
           <input type="text" id="addFriend" class="input"/>
           <br />
           <div id="addFriendsGo" class="go"><p align="center">go</p></div>

@@ -109,7 +109,7 @@ $(document).ready(function(){
     if (message['id'] == id) $('#signupMessage').html(message['message']);
   });
   socket.on('returnLogin', (message)=>{
-    if(message['id'] == id){
+    if(message['id'] == id && message['message'] == 'logged in as ' + $('#loginUsername').val()){
       $('#loginMessage').html(message['message']);
       id = $('#loginUsername').val();
       $('#loginText').html($('#loginUsername').val());

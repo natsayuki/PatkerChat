@@ -259,6 +259,7 @@ p{
   display: inline-block;
   width: 3.5rem;
   height: 1.5rem;
+  margin: auto;
 }
 .accept-deny{
   padding: 0px;

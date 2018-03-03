@@ -274,7 +274,10 @@ function emotify(string){
 
 function sendMessage(){
   let message = $('.input_box').val();
-  if(message.substring(0, 8) == ':whisper'){
+  if(message.length > 120){
+    console.log('no');
+  }
+  else if(message.substring(0, 8) == ':whisper'){
     const to = message.substring(message.indexOf('(') + 1, message.indexOf(')'));
     message = message.substring(message.indexOf(')')+1);
     socket.emit('whisper', {'to': to, 'from': id, 'message': message});

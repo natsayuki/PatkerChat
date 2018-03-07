@@ -203,7 +203,7 @@ socket.on('returnIncomingRequests', (json)=>{
     for(request in incomingRequests){
       console.log(request);
       $('#incomingRequests').append(`
-        <div class="incomingRequest" username="`+incomingRequests[request]['friend']`+">
+        <div class="incomingRequest" username="`+incomingRequests[request]['friend'] + `">
           <h3 align="center" class="incomingRequestEntery">from ` + incomingRequests[request]['friend'] + `</h3>
           <div class="accept"><h3 align="center" class="accept-deny">accept</h3></div>
           <div class="deny"><h3 align="center" class="accept-deny">deny</h3></div>
